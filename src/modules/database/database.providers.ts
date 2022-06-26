@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { DB_PROVIDER } from '../../constants';
 import { ConfigService } from '../config/config.service';
 
-const db = new ConfigService(`.env.${process.env.NODE_ENV}`);
+const db = new ConfigService('.env');
 
 export const databaseProviders = [
   {
