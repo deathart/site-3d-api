@@ -15,7 +15,8 @@ export class JwtEntity {
   accessToken: string;
 
   @ApiProperty({
-    description: 'Account Email',
+    example: 'test@test.com',
+    description: 'Email user',
   })
   email: string;
 

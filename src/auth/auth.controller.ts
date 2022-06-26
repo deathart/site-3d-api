@@ -17,8 +17,8 @@ import { AuthentificationDto } from '../shareds/dto/auth/authentification.dto';
 import { RefreshTokenDto } from '../shareds/dto/auth/refreshtoken.dto';
 import { CreateUserDto } from '../shareds/dto/auth/create-user.dto';
 import { ErrorsInterceptor } from '../shareds/interceptors/errors.interceptor';
-import { UsersEntity } from 'src/shareds/entities/users.entity';
-import { JwtEntity } from 'src/shareds/entities/jwt.entity';
+import { UsersEntity } from '../shareds/entities/users.entity';
+import { JwtEntity } from '../shareds/entities/jwt.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -27,7 +27,7 @@ export class AuthController {
 
   @Post('authentification')
   @UseInterceptors(ErrorsInterceptor)
-  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
+  @ApiNotFoundResponse({ status: 404, description: 'Account doesnt exist' })
   async authentification(
     @Body() params: AuthentificationDto,
   ): Promise<JwtEntity> {

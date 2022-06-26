@@ -33,8 +33,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
   @ApiOkResponse({ type: [UsersEntity], description: 'All Users returned.' })
-  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Account doesnt exist' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
   async findAll(): Promise<UsersEntity[]> {
     const users = await this.usersService.findAll();
 
@@ -45,8 +45,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
   @ApiOkResponse({ type: UsersEntity, description: 'User by Email returned.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
-  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Account doesnt exist' })
   async findOneByEmail(@Param('email') email: string): Promise<UsersEntity> {
     const user = await this.usersService.findOneByEmail(email);
 
@@ -57,8 +57,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
   @ApiOkResponse({ type: UsersEntity, description: 'User by ID returned.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
-  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Account doesnt exist' })
   async findOneById(@Param('id') id: string): Promise<UsersEntity> {
     const user = await this.usersService.findOneById(id);
 

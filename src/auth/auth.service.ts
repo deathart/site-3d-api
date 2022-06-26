@@ -7,8 +7,8 @@ import { UsersService } from '../users/users.service';
 import { RefreshTokenDto } from '../shareds/dto/auth/refreshtoken.dto';
 import { AuthentificationDto } from '../shareds/dto/auth/authentification.dto';
 import { CreateUserDto } from '../shareds/dto/auth/create-user.dto';
-import { UsersEntity } from 'src/shareds/entities/users.entity';
-import { JwtEntity } from 'src/shareds/entities/jwt.entity';
+import { UsersEntity } from '../shareds/entities/users.entity';
+import { JwtEntity } from '../shareds/entities/jwt.entity';
 
 @Injectable()
 export class AuthService {

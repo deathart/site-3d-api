@@ -11,11 +11,11 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV) {
     const options = new DocumentBuilder()
-      .setTitle('API')
-      .setDescription('Api')
+      .setTitle('Site 3D Api')
+      .setDescription('Rest API for Site 3D, written with cofe and nestjs')
       .setVersion(process.env.npm_package_version)
-      .addTag('api')
       .addServer(`http://localhost:${db.get('APP_PORT')}`)
+      .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(app, options);
 

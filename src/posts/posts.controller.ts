@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -15,14 +16,14 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
-import { CreatePostDto } from 'src/shareds/dto/posts/create.dto';
-import { JwtAuthGuard } from 'src/shareds/guards/jwt-auth.guard';
-import { ErrorsInterceptor } from 'src/shareds/interceptors/errors.interceptor';
-import { Posts } from 'src/shareds/interfaces/posts.interface';
+import { PostsSchema } from 'src/shareds/schemas/posts.schema';
+import { CreatePostDto } from '../shareds/dto/posts/create.dto';
+import { JwtAuthGuard } from '../shareds/guards/jwt-auth.guard';
+import { ErrorsInterceptor } from '../shareds/interceptors/errors.interceptor';
+import { Posts } from '../shareds/interfaces/posts.interface';
 import { PostsService } from './posts.service';
 
 @ApiTags('Posts')
-@ApiBearerAuth()
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
@@ -30,9 +31,8 @@ export class PostsController {
   @Get('')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
-  @ApiOkResponse({ description: 'Get all posts.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
-  @ApiNotFoundResponse({ description: 'Posts doesnt exist' })
+  @ApiOkResponse({ status: 200, description: 'Get all posts.' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
   async findAll(@Body() params: any): Promise<Posts[]> {
     if (params.valid) {
       return this.postsService.findAllValid();
@@ -42,34 +42,48 @@ export class PostsController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
-  @ApiOkResponse({ description: 'Get post by id.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
-  @ApiNotFoundResponse({ description: 'Post doesnt exist' })
+  @ApiOkResponse({ status: 200, description: 'Get post by id.' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Post doesnt exist' })
   async findById(@Param('id') id: string): Promise<Posts> {
     return this.postsService.findById(id);
   }
 
   @Post('create')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
-  @ApiOkResponse({ description: 'Create post.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @ApiOkResponse({ status: 200, description: 'Create post.' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
   async create(@Body() post: CreatePostDto): Promise<Posts> {
     return this.postsService.create(post);
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ErrorsInterceptor)
-  @ApiOkResponse({ description: 'Update post.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
-  @ApiNotFoundResponse({ description: 'Post doesnt exist' })
+  @ApiOkResponse({ status: 200, description: 'Update post.' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Post doesnt exist' })
   async update(
     @Param('id') id: string,
     @Body() post: CreatePostDto,
   ): Promise<Posts> {
     return this.postsService.update(id, post);
+  }
+
+  @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ErrorsInterceptor)
+  @ApiOkResponse({ status: 200, description: 'Delete post.' })
+  @ApiForbiddenResponse({ status: 403, description: 'Forbidden.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Post doesnt exist' })
+  async delete(@Param('id') id: string): Promise<Posts> {
+    return this.postsService.delete(id);
   }
 }
