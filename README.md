@@ -1,1 +1,1 @@
-![Lint](https://github.com/deathart/mcb-api/workflows/Lint/badge.svg) ![Build](https://github.com/deathart/mcb-api/workflows/Build/badge.svg)
+![Lint](https://github.com/deathart/site-3d-api/workflows/Lint/badge.svg) ![Build](https://github.com/deathart/site-3d-api/workflows/Build/badge.svg)

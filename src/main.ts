@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ConfigService } from './modules/config/config.service';
 
@@ -11,10 +11,10 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV) {
     const options = new DocumentBuilder()
-      .setTitle('MCB API')
-      .setDescription('Api for MCB')
+      .setTitle('API')
+      .setDescription('Api')
       .setVersion(process.env.npm_package_version)
-      .addTag('MCB')
+      .addTag('api')
       .addServer(`http://localhost:${db.get('APP_PORT')}`)
       .build();
     const document = SwaggerModule.createDocument(app, options);
