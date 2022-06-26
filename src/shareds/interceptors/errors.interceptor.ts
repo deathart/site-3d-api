@@ -11,9 +11,9 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 export interface Response<T> {
-statusCode: number;
-message: string;
-data: T;
+  statusCode: number;
+  message: string;
+  data: T;
 }
 
 @Injectable()
@@ -22,14 +22,17 @@ export class ErrorsInterceptor<T> implements NestInterceptor<T, Response<T>> {
   constructor() {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-
     return next
       .handle()
       .pipe(
-        map(data => {
+        map((data) => {
           const response = context.switchToHttp().getResponse();
-        
-          if (response.statusCode >= 200 && response.statusCode <= 204 && !data) {
+
+          if (
+            response.statusCode >= 200 &&
+            response.statusCode <= 204 &&
+            !data
+          ) {
             response.status(204);
             return {
               statusCode: 204,
@@ -40,7 +43,7 @@ export class ErrorsInterceptor<T> implements NestInterceptor<T, Response<T>> {
         }),
       )
       .pipe(
-        catchError(e => {
+        catchError((e) => {
           if (e.response) {
             if (e.response.statusCode) {
               throw new HttpException(

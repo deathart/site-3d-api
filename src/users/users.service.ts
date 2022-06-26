@@ -7,7 +7,9 @@ import { CreateUserDto } from '../shareds/dto/auth/create-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject('UsersModelToken') private readonly usersModel: Model<Users>) {}
+  constructor(
+    @Inject('UsersModelToken') private readonly usersModel: Model<Users>,
+  ) {}
 
   async create(createUsersDto: CreateUserDto): Promise<Users> {
     const createUsers = new this.usersModel(createUsersDto);
@@ -20,11 +22,11 @@ export class UsersService {
   }
 
   async checkAuth(email: string): Promise<Users> {
-    return await this.usersModel.findOne({email}).exec();
+    return await this.usersModel.findOne({ email }).exec();
   }
 
   async findOneByEmail(email: string): Promise<Users> {
-    return await this.usersModel.findOne({email}).exec();
+    return await this.usersModel.findOne({ email }).exec();
   }
 
   async findOneById(id: string): Promise<Users> {

@@ -7,22 +7,24 @@ import { UpdateActionDto } from '../shareds/dto/actions/update.dto';
 
 @Injectable()
 export class ActionsService {
-  constructor(@Inject('ActionsModelToken') private readonly actionModel: Model<Actions>) {}
+  constructor(
+    @Inject('ActionsModelToken') private readonly actionModel: Model<Actions>,
+  ) {}
 
   async findById(id: string): Promise<Actions> {
     return await this.actionModel.findById(id).exec();
   }
 
   async findByBank(bankId: string): Promise<Actions[]> {
-    return await this.actionModel.find({bankId}).exec();
+    return await this.actionModel.find({ bankId }).exec();
   }
 
   async findByType(bankId: string, type: number): Promise<Actions[]> {
-    return await this.actionModel.find({bankId: bankId, type: type}).exec();
+    return await this.actionModel.find({ bankId: bankId, type: type }).exec();
   }
 
   async findByDate(bankId: string, date: Date): Promise<Actions[]> {
-    return await this.actionModel.find({bankId: bankId, date: date}).exec();
+    return await this.actionModel.find({ bankId: bankId, date: date }).exec();
   }
 
   async addAction(params: CreateActionDto): Promise<Actions> {
@@ -33,19 +35,25 @@ export class ActionsService {
 
   async updateAction(id: string, params: UpdateActionDto): Promise<Actions> {
     return await new Promise((resolve, reject) => {
-      this.actionModel.findOneAndUpdate({ _id: id }, { $set: {
-        type: params.type,
-        titre: params.titre,
-        comment: params.comment,
-        montant: params.montant,
-        data: params.date,
-        valid: params.valid,
-      } }, (err, doc) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(doc);
-      });
+      this.actionModel.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            type: params.type,
+            titre: params.titre,
+            comment: params.comment,
+            montant: params.montant,
+            data: params.date,
+            valid: params.valid,
+          },
+        },
+        (err, doc) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(doc);
+        },
+      );
     });
   }
 

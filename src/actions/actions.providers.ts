@@ -6,7 +6,8 @@ import { Actions } from '../shareds/interfaces/actions.interface';
 export const ActionsProviders = [
   {
     provide: ACTIONS_MODEL_PROVIDER,
-    useFactory:  (connection: Connection): Model<Actions> => connection.model('Actions', ActionsSchema),
+    useFactory: (connection: Connection): Model<Actions> =>
+      connection.model('Actions', ActionsSchema),
     inject: [DB_PROVIDER],
   },
 ];

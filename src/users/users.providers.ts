@@ -6,7 +6,8 @@ import { Users } from '../shareds/interfaces/users.interface';
 export const usersProviders = [
   {
     provide: USERS_MODEL_PROVIDER,
-    useFactory: (connection: Connection): Model<Users> => connection.model('Users', UsersSchema),
+    useFactory: (connection: Connection): Model<Users> =>
+      connection.model('Users', UsersSchema),
     inject: [DB_PROVIDER],
   },
 ];

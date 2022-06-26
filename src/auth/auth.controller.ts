@@ -1,5 +1,11 @@
 import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
-import { ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthentificationDto } from '../shareds/dto/auth/authentification.dto';
 import { RefreshTokenDto } from '../shareds/dto/auth/refreshtoken.dto';
@@ -15,9 +21,11 @@ export class AuthController {
 
   @Post('authentification')
   @UseInterceptors(ErrorsInterceptor)
-  @ApiNotFoundResponse({description: 'Account doesnt exist'})
-  @ApiForbiddenResponse({ description: 'Forbidden.'})
-  async authentification(@Body() params: AuthentificationDto): Promise<JwtEntity> {
+  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  async authentification(
+    @Body() params: AuthentificationDto,
+  ): Promise<JwtEntity> {
     const account = await this.authService.authentification(params);
 
     if (!account) {
@@ -29,10 +37,12 @@ export class AuthController {
 
   @Post('refreshtoken')
   @UseInterceptors(ErrorsInterceptor)
-  @ApiOkResponse({ type: JwtEntity, description: 'All Users returned.'})
-  @ApiNotFoundResponse({description: 'Account doesnt exist'})
-  @ApiForbiddenResponse({ description: 'Forbidden.'})
-  async refreshToken(@Body() params: RefreshTokenDto): Promise<JwtEntity | boolean> {
+  @ApiOkResponse({ type: JwtEntity, description: 'All Users returned.' })
+  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  async refreshToken(
+    @Body() params: RefreshTokenDto,
+  ): Promise<JwtEntity | boolean> {
     try {
       const account = await this.authService.checkToken(params);
 

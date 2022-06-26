@@ -12,7 +12,10 @@ import { JwtEntity } from 'src/shareds/entities/jwt.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService, private readonly usersService: UsersService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly usersService: UsersService,
+  ) {}
 
   async createToken(account: UsersEntity): Promise<JwtEntity> {
     const user: JwtPayload = { email: account.email };
@@ -21,7 +24,7 @@ export class AuthService {
     return new JwtEntity({
       expiresIn: 3600,
       accessToken,
-      account,
+      email: user.email,
     });
   }
 
@@ -60,5 +63,4 @@ export class AuthService {
 
     return new UsersEntity(account.toJSON());
   }
-
 }
