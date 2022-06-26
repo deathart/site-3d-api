@@ -3,19 +3,21 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ActionsModule } from './actions/actions.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { ConfigModule } from './modules/config/config.module';
 import { PostsModule } from './posts/posts.module';
+import { QuotationModule } from './quotation/quotation.module';
+import { ContactModule } from './contact/contact.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
-    // ActionsModule,
     DatabaseModule,
     ConfigModule,
     PostsModule,
+    QuotationModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
