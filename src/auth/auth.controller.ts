@@ -1,5 +1,12 @@
-import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import {
+  Body,
+  Controller,
+  NotFoundException,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
   ApiBody,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
@@ -22,14 +29,13 @@ export class AuthController {
   @Post('authentification')
   @UseInterceptors(ErrorsInterceptor)
   @ApiNotFoundResponse({ description: 'Account doesnt exist' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
   async authentification(
     @Body() params: AuthentificationDto,
   ): Promise<JwtEntity> {
     const account = await this.authService.authentification(params);
 
     if (!account) {
-      return null;
+      throw new NotFoundException();
     }
 
     return await this.authService.createToken(account);
@@ -38,8 +44,7 @@ export class AuthController {
   @Post('refreshtoken')
   @UseInterceptors(ErrorsInterceptor)
   @ApiOkResponse({ type: JwtEntity, description: 'All Users returned.' })
-  @ApiNotFoundResponse({ description: 'Account doesnt exist' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @ApiBadRequestResponse({ description: 'invalid signature' })
   async refreshToken(
     @Body() params: RefreshTokenDto,
   ): Promise<JwtEntity | boolean> {
