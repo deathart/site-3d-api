@@ -1,5 +1,5 @@
 import { Connection, Model } from 'mongoose';
-import { UsersSchema } from './schemas/users.schema';
+import { UsersSchema } from '../shareds/schemas/users.schema';
 import { DB_PROVIDER, USERS_MODEL_PROVIDER } from '../constants';
 import { Users } from '../shareds/interfaces/users.interface';
 

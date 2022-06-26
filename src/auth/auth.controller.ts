@@ -8,7 +8,6 @@ import {
 import {
   ApiBadRequestResponse,
   ApiBody,
-  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,

@@ -1,5 +1,5 @@
 import { Connection, Model } from 'mongoose';
-import { ActionsSchema } from './schemas/actions.schema';
+import { ActionsSchema } from '../shareds/schemas/actions.schema';
 import { ACTIONS_MODEL_PROVIDER, DB_PROVIDER } from '../constants';
 import { Actions } from '../shareds/interfaces/actions.interface';
 
